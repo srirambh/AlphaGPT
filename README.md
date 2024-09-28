@@ -15,30 +15,31 @@ Ensure you have reviewed the [Rules & FAQ](https://hackmidwest.com/#faq)
 *List the full names,  email address & Github username of your teammates*
 
 1.   **Full Name**  || **fullname@company.com**  (or fullname@school.edu if you're a CS student) || **Github Username**
-2. 
-3.
-4.
+2. Sriram Bharadwaj || ssbharadwaj2@wisc.edu || srirambh
+3. Aiden Cohen || alcohen22@wisc.edu || AidenCohen31
+4. Minsung Choi || mchoi66@wisc.edu || choims711
 5.
 
 <br /><br />
 
 
 ## What is the name of your App?
-
+AlphaGPT
 <br /><br />
 ## What does your app do?
 *Describe in a paragraph or so*
 
+Our app is a GPT wrapper designed to return what would be your ideal response to GPT when inputting a complicated task. Rather than GPT returning to you a breakdown of the task into subtasks, it will return to you everything you intended when you ask the question.
 <br /><br />
 
 
 ## What challenges are you building for? SELECT ALL THAT APPLY
 *See hackmidwest.com/#prizes for challenge details*
-- [ ]  Pinata Challenge
-- [ ]  Pinata AI Challenge
-- [ ]  Pinata Enterprise Challenge
+- [X]  Pinata Challenge
+- [X]  Pinata AI Challenge
+- [X]  Pinata Enterprise Challenge
 - [ ]  AWS Bedrock Challenge
-- [ ]  Red Hat | Intel AI Challenge
+- [X]  Red Hat | Intel AI Challenge
 - [ ]  Zoom Challenge
 - [ ]  USDA Challenge
 - [ ]  brAIn Rot Challenge
