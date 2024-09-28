@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pod-service
+spec:
+  selector:
+    app: project
+  ports:
+    - protocol: TCP
+      targetPort: 8081
+---
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: ProjectPod
+spec:
+  template:
+    kind: Pod
+    metadata:
+      labels:
+        app: "project"
+    containers:
+      - name: api
+        image: api
+        command: ["python3", "app.py"]
+    ports:
+      - port: 8081
+      - containerPort: 8081
