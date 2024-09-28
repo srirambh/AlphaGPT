@@ -66,14 +66,14 @@ url = "https://api.openai.com/v1/chat/completions"
 #             break  # Exit the loop on failure
 #     return messages
 
-# def remove_non_digits(input_string):
-#     # Check if the string contains anything other than digits
-#     if any(char not in '0123456789' for char in input_string):
-#         # Remove non-digit characters
-#         filtered_string = ''.join(char for char in input_string if char.isdigit())
-#         return filtered_string
-#     else:
-#         return input_string  # Return the original string if it only contains digits
+def remove_non_digits(input_string):
+    # Check if the string contains anything other than digits
+    if any(char not in '0123456789' for char in input_string):
+        # Remove non-digit characters
+        filtered_string = ''.join(char for char in input_string if char.isdigit())
+        return filtered_string
+    else:
+        return input_string  # Return the original string if it only contains digits
 
 
 def generateTasks(prompt):
@@ -125,7 +125,8 @@ if __name__ == "__main__":
 
     # print(generate_session())
 
-    numWorkers, workerPrompts, workerFiles, workerExamples = generateTasks("Here is a prompt: Can you create an app for a hospital to keep track of hospital patient records? Relevant files: {records.csv has columns for patient names, patient IDs, patient healthcare insurance providers, known illnesses, and emergency contacts.} {checkins.csv contains columns for patient IDS, patient names, check-in times, and check-out times} {medical_bills.csv contains columns for patient names, patient ids, health insurance providers, bills owed (boolean column), and outstanding medical bills amount}. Feel free to implement functions that are used in conjunction with these rules, such as marking when a patient checks in and out, as well as updating any information in the CSV.")
+    # numWorkers, workerPrompts, workerFiles, workerExamples = generateTasks("Here is a prompt: Can you create an app for a hospital to keep track of hospital patient records? Relevant files: {records.csv has columns for patient names, patient IDs, patient healthcare insurance providers, known illnesses, and emergency contacts.} {checkins.csv contains columns for patient IDS, patient names, check-in times, and check-out times} {medical_bills.csv contains columns for patient names, patient ids, health insurance providers, bills owed (boolean column), and outstanding medical bills amount}. Feel free to implement functions that are used in conjunction with these rules, such as marking when a patient checks in and out, as well as updating any information in the CSV.")
+    numWorkers, workerPrompts, workerFiles, workerExamples = generateTasks("Here is a prompt: Can you summarize chapter 2 of each book in all of the Harry Potter series? Relevant files: azkaban.docx, chamber_secrets.docx, goblet.docx, half_blood.docx,sorcerer_stone.docx, deathly_hallows.docx, order_of_phoenix.docx")
     print(workerPrompts)
     print()
     print(workerFiles)
