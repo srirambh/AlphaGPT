@@ -53,7 +53,7 @@ export default function EditDashboard() {
       <h1 className="text-foreground text-3xl font-bold">{project.name}</h1>
       <section className="w-2/3 space-y-6">
         <h1>Worker LLMs</h1>
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="w-full border-t">
           {project.workers.map((worker, idx) => {
             async function onSubmit(data: any) {
               console.log(data);

@@ -5,7 +5,8 @@ const sleep = (delay: number) =>
 
 export async function postModel(formData: any) {
   console.log("postModel called! payload:", formData);
-  return axios.post(`${import.meta.env.VITE_BASE_ENDPOINT}`, formData);
+  return axios.post(`${import.meta.env.VITE_BASE_ENDPOINT}/projects`, formData);
   // TODO: PLACEHOLDER
   // return sleep(750);
+  // return
 }

@@ -4,16 +4,30 @@ import { postModel } from "./requests";
 import { useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { IoIosSend } from "react-icons/io";
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
+import { AiOutlineLoading } from "react-icons/ai";
 
 export default function Home() {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
-  const { mutate } = useMutation({
+  const { toast } = useToast();
+  const { mutate, isPending } = useMutation({
     mutationFn: postModel,
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["models"] });
       console.log("postModel success!");
+      toast({
+        title: "Successfully created new project!",
+        className: "bg-green-200",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Something went wrong...",
+        className: "bg-red-200",
+      });
     },
   });
   async function onSubmit(data: any) {
@@ -41,10 +55,15 @@ export default function Home() {
             type="submit"
             className="min-w-[56px] h-[56px] rounded-full bg-blue-200 border-2 flex flex-col items-center justify-center hover:cursor-pointer hover:scale-110 transition-transform active:scale-90"
           >
-            <IoIosSend className="w-[32px] h-[32px]" />
+            {isPending ? (
+              <AiOutlineLoading className="w-[32px] h-[32px] animate-spin" />
+            ) : (
+              <IoIosSend className="w-[32px] h-[32px]" />
+            )}
           </button>
         </div>
       </form>
+      <Toaster />
     </main>
   );
 }

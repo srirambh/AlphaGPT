@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Button } from "./components/ui/button";
 import { ScrollArea } from "./components/ui/scroll-area";
 import { Separator } from "./components/ui/separator";
@@ -10,6 +10,7 @@ import { Progress } from "./components/ui/progress";
 import { Skeleton } from "./components/ui/skeleton";
 
 export default function Sidebar() {
+  const { id } = useParams();
   const [progress, setProgress] = useState(13);
   const { data, isPending } = useQuery({
     queryKey: ["models"],
@@ -32,40 +33,46 @@ export default function Sidebar() {
       <Separator className="w-[120px]" />
       <ScrollArea className="w-full h-full">
         <div className="flex flex-col space-y-6 items-center">
-          {isPending ? (
-            <Skeleton className="h-[80px] w-[80px]" />
-          ) : (
-            projects.map(
-              //TODO: Placeholder -> change projects to data
-              (project, idx: number) =>
-                project.state == "ready" ? (
-                  <Button
-                    key={idx}
-                    className="h-[80px] w-[80px] hover:scale-105 transition-transform hover:bg-zinc-400/70 active:scale-95 bg-zinc-400 border-2 shadow-sm"
-                    asChild
-                  >
-                    <Link to={`/${project.id}`}>
-                      <p className="text-secondary-foreground">
-                        {project.name}
-                      </p>
-                    </Link>
-                  </Button>
-                ) : (
-                  <Button
-                    key={idx}
-                    className="h-[80px] w-[80px] flex flex-col items-center justify-around bg-zinc-300 hover:bg-zinc-300/90 active:scale-95 transition-transform"
-                    asChild
-                  >
-                    <Link to={`/${project.id}`}>
-                      <p className="text-secondary-foreground">
-                        {project.name}
-                      </p>
-                      <Progress value={progress} className="h-[10px] border" />
-                    </Link>
-                  </Button>
-                ),
-            )
-          )}
+          {isPending
+            ? Array(10).map((idx) => (
+                <Skeleton
+                  key={idx}
+                  className="h-[80px] w-[80px] bg-black z-20"
+                />
+              ))
+            : projects.map(
+                //TODO: Placeholder -> change projects to data
+                (project, idx: number) =>
+                  project.state == "ready" ? (
+                    <Button
+                      key={idx}
+                      className={`h-[80px] w-[80px] ${id == project.id ? "scale-125 shadow-lg" : "shadow-sm"} hover:scale-105 transition-transform hover:bg-zinc-400/70 active:scale-95 bg-gradient-to-br from-zinc-400 to-zinc-400/50`}
+                      asChild
+                    >
+                      <Link to={`/${project.id}`}>
+                        <p className="text-secondary-foreground">
+                          {project.name}
+                        </p>
+                      </Link>
+                    </Button>
+                  ) : (
+                    <Button
+                      key={idx}
+                      className={`h-[80px] w-[80px] ${id == project.id ? "scale-125 shadow-md" : ""} flex flex-col items-center justify-around hover:bg-zinc-300/90 active:scale-95 transition-transform bg-gradient-to-br from-zinc-300 to-zinc-300/70`}
+                      asChild
+                    >
+                      <Link to={`/${project.id}`}>
+                        <p className="text-secondary-foreground">
+                          {project.name}
+                        </p>
+                        <Progress
+                          value={progress}
+                          className="h-[10px] border"
+                        />
+                      </Link>
+                    </Button>
+                  ),
+              )}
         </div>
       </ScrollArea>
     </div>
