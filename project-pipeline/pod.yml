@@ -18,20 +18,31 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "project"
+      app: project
   template:
     metadata:
       labels:
-        app: "project"
+        app: project
+        run: rabbitmq
+
     spec:
       containers:
         - name: hypervisor
-          image: hypervisor
+          image: hypervisor:latest
           command: ["python3", "hypervisor.py"]
           ports:
             - containerPort: 8081
+          imagePullPolicy: Never
+
         - name: expert1
-          image: expert
+          image: expert:latest
           command: ["python3", "expert.py"]
           ports:
             - containerPort: 8081
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: OPENAI_API_KEY
+          imagePullPolicy: Never
