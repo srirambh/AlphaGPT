@@ -9,17 +9,17 @@ export const projects = [
     workers: [
       {
         id: "i-0a1b2c3d4e5f67890",
-        files: [],
+        files: [{ name: "sampledata.csv" }, { name: "coolstuff.txt" }],
         status: "online",
       },
       {
         id: "i-1b2c3d4e5f6789012",
-        files: [],
+        files: [{ name: "bankdata.csv" }, { name: "profitdata.csv" }],
         status: "offline",
       },
       {
         id: "i-2c3d4e5f678901234",
-        files: [],
+        files: [{ name: "layoffs.txt" }],
         status: "online",
       },
       {
@@ -29,7 +29,11 @@ export const projects = [
       },
       {
         id: "i-4e5f6789012345678",
-        files: [],
+        files: [
+          { name: "mangoprices.csv" },
+          { name: "appleprices.csv" },
+          { name: "bananas.csv" },
+        ],
         status: "online",
       },
       {
@@ -39,7 +43,7 @@ export const projects = [
       },
       {
         id: "i-6g789012345678901",
-        files: [],
+        files: [{ name: "averageincome.txt" }],
         status: "online",
       },
     ],

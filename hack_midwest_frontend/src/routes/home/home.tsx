@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postModel } from "./requests";
 import { useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
+import { IoIosSend } from "react-icons/io";
 
 export default function Home() {
   const queryClient = useQueryClient();
@@ -28,13 +29,21 @@ export default function Home() {
         <Label htmlFor="prompt" className="text-2xl">
           Let's build your refined LLM.
         </Label>
-        <Input
-          id="prompt"
-          {...register("prompt")}
-          className="max-w-3xl rounded-full text-2xl border-2 font-light py-6 px-5"
-          type="text"
-          placeholder="Ask AlphaGPT for a customized LLM"
-        />
+        <div className="w-full flex flex-row items-center space-x-4 rounded-full border-2 border-border p-2">
+          <Input
+            {...register("prompt")}
+            id="prompt"
+            className="w-full text-2xl rounded-none font-light py-6 px-5 border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            type="text"
+            placeholder="Ask AlphaGPT for a customized LLM"
+          />
+          <button
+            type="submit"
+            className="min-w-[56px] h-[56px] rounded-full bg-blue-200 border-2 flex flex-col items-center justify-center hover:cursor-pointer hover:scale-110 transition-transform active:scale-90"
+          >
+            <IoIosSend className="w-[32px] h-[32px]" />
+          </button>
+        </div>
       </form>
     </main>
   );

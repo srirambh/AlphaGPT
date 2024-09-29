@@ -8,6 +8,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaFileAlt } from "react-icons/fa";
+import { GoPaperclip } from "react-icons/go";
+import { IoIosSend } from "react-icons/io";
 
 export default function ModelDashboard() {
   const [files, setFiles] = useState<File[]>([]);
@@ -31,7 +34,7 @@ export default function ModelDashboard() {
 
   async function onSubmit(data) {
     data["projectid"] = id;
-    data["file"] = files;
+    data["files"] = files;
     mutate(data);
   }
 
@@ -48,49 +51,64 @@ export default function ModelDashboard() {
       <main className="w-full flex flex-col items-center justify-around">
         <h1 className="text-foreground text-3xl font-bold">{project.name}</h1>
         <div className="min-w-[768px] flex flex-col items-center space-y-6">
-          {files.length == 0 ? (
-            <Label htmlFor="prompt" className="text-2xl">
-              Should we get started?
-            </Label>
-          ) : (
-            <div className="flex flex-col w-full space-y-2">
-              {Array.from(files).map((file, idx) => (
-                <div
-                  key={idx}
-                  className="bg-secondary p-2 w-1/2 rounded-md border-2"
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
+            {files.length == 0 ? (
+              <Label htmlFor="prompt" className="text-2xl w-full ml-8">
+                Should we get started?
+              </Label>
+            ) : (
+              <div className="flex flex-col space-y-2 w-full">
+                <Button
+                  className="w-1/4"
+                  onClick={() => {
+                    document.getElementById("file-upload").value = [];
+                    setFiles([]);
+                  }}
                 >
-                  {file.name}
-                </div>
-              ))}
-            </div>
-          )}
-          <form
-            className="w-full flex flex-row items-center space-x-4 rounded-full border-2 border-border p-2"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <Label className="m-0">
-              <input
-                {...register("file[]")}
-                type="file"
-                id="file-upload"
-                multiple
-                hidden
-                onChange={(e) => {
-                  console.log(e.target.files);
-                  setFiles(e.target.files);
-                }}
-              />
-              <div className="w-[56px] h-[56px] rounded-full bg-secondary border-2 flex flex-col items-center justify-center hover:cursor-pointer">
-                <p className="text-sm">File icon</p>
+                  Clear file upload
+                </Button>
+                {Array.from(files).map((file, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-secondary p-2 w-1/2 rounded-md border-2 flex flex-row items-center space-x-2"
+                  >
+                    <FaFileAlt />
+                    <p>{file.name}</p>
+                  </div>
+                ))}
               </div>
-            </Label>
-            <Input
-              {...register("prompt")}
-              id="prompt"
-              className="w-full text-2xl rounded-none font-light py-6 px-5 border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-              type="text"
-              placeholder={`Ask ${project.name} a question`}
-            />
+            )}
+            <div className="w-full flex flex-row items-center space-x-4 rounded-full border-2 border-border p-2">
+              <Label className="m-0">
+                <input
+                  {...register("files[]")}
+                  type="file"
+                  id="file-upload"
+                  multiple
+                  hidden
+                  onChange={(e) => {
+                    console.log(e.target.files);
+                    setFiles(e.target.files);
+                  }}
+                />
+                <div className="w-[56px] h-[56px] rounded-full bg-secondary border-2 flex flex-col items-center justify-center hover:cursor-pointer hover:scale-105 transition-transform active:scale-95">
+                  <GoPaperclip className="w-[32px] h-[32px]" />
+                </div>
+              </Label>
+              <Input
+                {...register("prompt")}
+                id="prompt"
+                className="w-full text-2xl rounded-none font-light py-6 px-5 border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                type="text"
+                placeholder={`Ask ${project.name} a question`}
+              />
+              <button
+                type="submit"
+                className="min-w-[56px] h-[56px] rounded-full bg-blue-200 border-2 flex flex-col items-center justify-center hover:cursor-pointer hover:scale-110 transition-transform active:scale-90"
+              >
+                <IoIosSend className="w-[32px] h-[32px]" />
+              </button>
+            </div>
           </form>
           <Button variant="outline" className="" asChild>
             <Link to="edit">Edit and fine tune this model</Link>

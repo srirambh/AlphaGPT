@@ -12,9 +12,12 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { postFile } from "./requests";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { FaFileAlt } from "react-icons/fa";
 
 export default function EditDashboard() {
   const queryClient = useQueryClient();
+  const [selectedFile, setSelectedFile] = useState();
   const { id } = useParams();
   const { data, isPending } = useQuery({
     queryKey: ["model", id],
@@ -60,7 +63,13 @@ export default function EditDashboard() {
             }
             return (
               <AccordionItem value={worker.id} key={idx}>
-                <AccordionTrigger>
+                <AccordionTrigger
+                  onClick={() =>
+                    setSelectedFile(
+                      worker.files.length ? worker.files[0].name : "No file",
+                    )
+                  }
+                >
                   <p className="w-1/2">{worker.id}</p>
                   <p
                     className={`${worker.status == "online" ? "text-green-600" : worker.status == "restarting" ? "text-orange-500" : "text-red-600"}`}
@@ -69,14 +78,36 @@ export default function EditDashboard() {
                   </p>
                 </AccordionTrigger>
                 <AccordionContent>
-                  Upload a file
-                  <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="flex flex-col space-y-4 w-1/4"
-                  >
-                    <Input {...register("file")} type="file" />
-                    <Button type="submit">Upload</Button>
-                  </form>
+                  <div className="flex flex-row space-x-4">
+                    <div className="min-w-60">
+                      <div className="flex flex-col space-y-2 w-full">
+                        {worker.files.map((file) => (
+                          <div
+                            className={`p-2 rounded-md border-2 hover:cursor-pointer flex flex-row items-center space-x-2 ${file.name == selectedFile ? "bg-secondary" : ""}`}
+                            onClick={() => setSelectedFile(file.name)}
+                          >
+                            <FaFileAlt />
+                            <p>{file.name}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="mt-4 mb-2">Upload a file</p>
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="flex flex-col space-y-4 w-full"
+                      >
+                        <Input
+                          {...register("file")}
+                          type="file"
+                          className="hover:cursor-pointer"
+                        />
+                        <Button type="submit">Upload</Button>
+                      </form>
+                    </div>
+                    <div className="w-full bg-secondary h-72 inline-flex items-center justify-center rounded-md">
+                      <p>{selectedFile} graph content</p>
+                    </div>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
             );

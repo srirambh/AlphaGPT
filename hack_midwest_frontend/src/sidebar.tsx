@@ -7,6 +7,7 @@ import { getModels } from "./requests";
 import { projects } from "./db/db";
 import { useEffect, useState } from "react";
 import { Progress } from "./components/ui/progress";
+import { Skeleton } from "./components/ui/skeleton";
 
 export default function Sidebar() {
   const [progress, setProgress] = useState(13);
@@ -19,25 +20,20 @@ export default function Sidebar() {
     return () => clearTimeout(timer);
   }, []);
   return (
-    <div className="min-w-40 border-b border-border/40 bg-primary/95 backdrop-blur supports-[backdrop-filter]:bg-primary/60 z-10 flex flex-col items-center space-y-10 pt-10">
+    <div className="min-w-36 border-b border-border/40 bg-secondary/95 backdrop-blur supports-[backdrop-filter]:bg-secondary/60 z-10 flex flex-col items-center space-y-10 pt-10 shadow-lg">
       <Button
-        className="min-h-28 min-w-28 hover:scale-105 transition-transform"
+        className="min-h-24 min-w-24 hover:scale-105 transition-transform bg-zinc-500 hover:bg-zinc-500/70 border-2 shadow-md active:scale-95"
         asChild
       >
         <Link to="/">
-          <p className="text-primary-foreground font-bold text-5xl">+</p>
+          <p className="text-primary-foreground font-medium text-5xl">α</p>
         </Link>
       </Button>
       <Separator className="w-[120px]" />
       <ScrollArea className="w-full h-full">
-        <div className="flex flex-col space-y-10 items-center">
+        <div className="flex flex-col space-y-6 items-center">
           {isPending ? (
-            <Button
-              className="h-[100px] w-[100px] hover:scale-105 transition-transform"
-              asChild
-            >
-              <p className="text-primary-foreground">...</p>
-            </Button>
+            <Skeleton className="h-[80px] w-[80px]" />
           ) : (
             projects.map(
               //TODO: Placeholder -> change projects to data
@@ -45,7 +41,7 @@ export default function Sidebar() {
                 project.state == "ready" ? (
                   <Button
                     key={idx}
-                    className="h-[100px] w-[100px] hover:scale-105 transition-transform bg-secondary hover:bg-background"
+                    className="h-[80px] w-[80px] hover:scale-105 transition-transform hover:bg-zinc-400/70 active:scale-95 bg-zinc-400 border-2 shadow-sm"
                     asChild
                   >
                     <Link to={`/${project.id}`}>
@@ -57,7 +53,7 @@ export default function Sidebar() {
                 ) : (
                   <Button
                     key={idx}
-                    className="h-[100px] w-[100px] flex flex-col items-center justify-around bg-secondary/50 hover:bg-background/50"
+                    className="h-[80px] w-[80px] flex flex-col items-center justify-around bg-zinc-300 hover:bg-zinc-300/90 active:scale-95 transition-transform"
                     asChild
                   >
                     <Link to={`/${project.id}`}>
