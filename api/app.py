@@ -3,7 +3,6 @@ import os
 from flask_cors import CORS
 import requests
 from openai import OpenAI
-import os
 from dotenv import load_dotenv
 import chromadb
 from langchain_openai import OpenAIEmbeddings
